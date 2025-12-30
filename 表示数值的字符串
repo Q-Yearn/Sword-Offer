@@ -1,0 +1,110 @@
+# --coding: utf-8--
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param str string字符串 
+# @return bool布尔型
+#
+# 
+# 方法一:正则表达式
+# import re
+# class Solution:
+#     def isNumeric(self , str ):
+#         # write code here
+#         match = re.match(r'^\s*[+-]{0,1}((\d)+((\.)(\d)+){0,1}|((\.)(\d)+)|((\d)+(\.)))([eE][+-]{0,1}[\d]+){0,1}\s*$',str)
+#         return True if match else False
+
+
+# 方法二: 异常捕获
+# class Solution:
+#     def isNumeric(self , str ):
+#         try:
+#             float(str)
+#         except:
+#             return False
+#         return True
+
+# 方法三:有限状态自动机
+# class Solution:
+#     def isNumeric(self , str ):
+#         # 4小数点前无整数  后面至少有一个整数的情况
+#         # 6处理指数后面至少有一个整数的情况
+#         states = [
+#             {' ': 0, 's': 1, 'd': 2, '.':4}, # 0
+#             {'d': 2, '.': 4},                # 1
+#             {'d': 2, '.': 3, 'e':5, ' ': 8}, # 2
+#             {'d': 3, 'e': 5, ' ': 8},        # 3
+#             {'d': 3},                        # 4
+#             {'s': 6, 'd': 7},                # 5
+#             {'d': 7},                        # 6
+#             {'d': 7, ' ': 8},                # 7
+#             {' ': 8},                        # 8
+#         ]
+
+#         p = 0
+#         for c in str:
+#             if '0' <= c <= '9':
+#                 t = 'd'
+#             elif c in '+-':
+#                 t = 's'
+#             elif c in 'Ee':
+#                 t = 'e'
+#             elif c == '.' or c == ' ':
+#                 t = c
+#             else:
+#                 return False
+            
+#             if t not in states[p]:
+#                 return False
+#             p = states[p][t]
+        
+#         return p in {2, 3, 7, 8}
+
+
+# 方法四:枚举法
+class Solution:
+    def isNumeric(self , str ):
+        str = str.strip()
+        if not str:
+            return False
+        has_num = False
+        has_dot = False
+        has_e = False
+        l = len(str)
+        for i in range(l):
+            if str[i] in '+-':
+                if i == l-1:
+                    return False
+                if i != 0 and str[i-1] not in 'Ee':
+                    return False
+            elif str[i] == '.':
+                # 如果前面有小数点出现过了或者先出现eE
+                if has_dot or has_e:
+                    return False
+                has_dot =True
+            elif str[i] in 'Ee':
+                if has_e or i == l-1 or not has_num:
+                    return False
+                has_e = True
+            elif str[i].isdigit():
+                has_num = True
+            else:
+                return False
+        return has_num
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
