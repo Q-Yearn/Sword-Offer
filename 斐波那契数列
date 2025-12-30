@@ -1,0 +1,30 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param n int整型 
+# @return int整型
+#
+# 动态规划
+# class Solution:
+#     def Fibonacci(self , n ):
+#         # write code here
+#         dp = [1] * n
+#         for i in range(2,n):
+#             dp[i] = dp[i-1] + dp[i-2]
+#         return dp[n-1] 
+
+# 递归
+class Solution:
+    def Fibonacci(self , n ):
+        tmp = []
+        tmp.append(1)
+        tmp.append(1)
+        def dfs(x):
+            if len(tmp) >= x:
+                return tmp[x-1]
+            res = dfs(x-1) + dfs(x-2)
+            tmp.append(res)
+            return res
+        return dfs(n)
