@@ -1,0 +1,16 @@
+# -*- coding:utf-8 -*-
+class Solution:
+    def __init__(self):
+        self.stack1 = []
+        self.stack2 = []
+    def push(self, node):
+        # write code here
+        # 直接使用insert 时间复杂度是O(n) 一个列表就可以完成
+        # self.stack1.insert(0, node)
+        self.stack1.append(node)
+    def pop(self):
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        return self.stack2.pop()
+        # return xx
