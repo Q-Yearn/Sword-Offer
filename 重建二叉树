@@ -1,0 +1,61 @@
+#coding:utf-8
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param preOrder int整型一维数组 
+# @param vinOrder int整型一维数组 
+# @return TreeNode类
+#
+# 方法一 递归
+# class Solution:
+#     def reConstructBinaryTree(self , preOrder , vinOrder ):
+#         # write code here
+#         self.cur = 0
+#         def construct(vinl, vinr):
+#             if vinl > vinr:
+#                 return None
+#             l = vinl
+#             while l <= vinr:
+#                 if vinOrder[l] == preOrder[self.cur]:
+#                     break
+#                 l += 1
+#             node = TreeNode(preOrder[self.cur])
+#             self.cur += 1
+#             node.left = construct(vinl, l-1)
+#             node.right = construct(l+1, vinr)
+#             return node
+#         root = construct(0, len(vinOrder)-1)
+#         return root
+
+
+# 方法二 栈
+class Solution:
+    def reConstructBinaryTree(self , preOrder , vinOrder ):
+        m = len(preOrder)
+        n = len(vinOrder)
+        if m == 0 or n == 0:
+            return None
+        stack = []
+        root = TreeNode(preOrder[0])
+        cur = root
+        j = 0
+        for i in range(1, m):
+            if cur.val != vinOrder[j]:
+                cur.left = TreeNode(preOrder[i])
+                stack.append(cur)
+                cur = cur.left
+            else:
+                j += 1
+                while stack and stack[-1].val == vinOrder[j]:
+                    j += 1
+                    cur = stack[-1]
+                    stack.pop()
+                cur.right = TreeNode(preOrder[i])
+                cur = cur.right
+        return root
