@@ -1,0 +1,52 @@
+# -*- coding:utf-8 -*-
+class TreeLinkNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+        self.next = None
+
+# 方法一
+# class Solution:
+#     def GetNext(self, pNode):
+#         # write code here
+#         tmp = []
+#         def vinorder(node):
+#             if node is None:
+#                 return
+#             vinorder(node.left)
+#             tmp.append(node)
+#             vinorder(node.right)
+#         node = pNode
+#         while node.next:
+#             node = node.next
+#         vinorder(node)
+#         for i in range(len(tmp)):
+#             if pNode == tmp[i]:
+#                 return tmp[i+1] if i+1 < len(tmp) else None
+#         return None
+
+
+
+# 方法二
+class Solution:
+    def GetNext(self, pNode):
+        if pNode.right:
+            cur = pNode.right
+            while cur.left:
+                cur = cur.left
+            return cur
+        
+        if pNode.next and pNode.next.left == pNode:
+            return pNode.next
+        
+        if pNode.next:
+            cur = pNode.next
+            while cur.next and cur.next.right == cur:
+                cur = cur.next
+            return cur.next
+        return None
+
+
+
+
