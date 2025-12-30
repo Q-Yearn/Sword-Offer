@@ -1,0 +1,53 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param n int整型 
+# @return int整型
+#
+# 加记忆化才不超时
+# class Solution:
+#     def cutRope(self , n ):
+#         # write code here
+#         self.res = 0
+#         def dfs(curlen, curmul):
+#             if curlen == n:
+#                 self.res = max(self.res, curmul)
+            
+#             for i in range(1, n-curlen+1):
+#                 dfs(curlen+i, curmul*i)
+        
+#         dfs(0, 1)
+#         return self.res
+
+# # 动态规划
+# class Solution:
+#     def cutRope(self , n ):
+#         # 输出所有裁剪后比自己当子段短的长度
+#         if n == 2: return 1
+#         if n == 3: return 2
+#         dp = [0] * (n+1)
+#         dp[1] = 1
+#         dp[2] = 2
+#         dp[3] = 3
+#         for i in range(4, n+1):
+#             for j in range(1, i // 2 + 1):
+#                 dp[i] = max(dp[i], dp[j]*dp[i-j])
+#         return dp[n]
+
+# 贪心算法
+# 数据公式  当绳子长度大于3时，尽量把绳子剪成长度为 3 的段，乘积最大；如果剩下长度为 4，则剪成 2*2
+class Solution:
+    def cutRope(self , n ):
+        if n == 2:
+            return 1
+        if n == 3:
+            return 2
+        if n == 4:
+            return 4
+        res = 1
+        while n > 4:
+            res *= 3
+            n -= 3
+        return res * n
