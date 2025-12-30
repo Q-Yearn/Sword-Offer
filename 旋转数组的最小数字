@@ -1,0 +1,28 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param nums int整型一维数组 
+# @return int整型
+
+# 不能和nums[left] 因为nums[mid] 比 nums[left] 大了  有可能在左边也有可能在右边
+
+# 和leetcode的不同  leetcode的数字互不相同
+class Solution:
+    def minNumberInRotateArray(self , nums ):
+        # write code here
+        left = 0
+        right = len(nums) - 1
+        while left < right:
+            mid = ( left + right ) // 2
+            if nums[mid] > nums[right]:
+                left = mid + 1
+            elif nums[mid] < nums[left]:
+                right = mid
+            else:
+            # 1 0 1 1 1
+            # 1 1 0 1 1
+            # 反正nums[mid]和nums[right]相同  直接缩小区间考虑就好了
+                right -= 1
+        return nums[left]
