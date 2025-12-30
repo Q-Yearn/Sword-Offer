@@ -1,0 +1,19 @@
+# -*- coding:utf-8 -*-
+class Solution:
+    def Power(self, base, exponent):
+        # write code here
+        res = 1
+        if exponent == 0:
+            return 1
+        elif exponent > 0:
+            while exponent > 0:
+                res *= base
+                exponent -= 1
+        else:
+            exponent = -exponent
+            base = 1 / base
+            while exponent:
+                res *= base
+                exponent -= 1
+        return res
+
