@@ -1,0 +1,30 @@
+# -*- coding:utf-8 -*-
+class Solution:
+    def movingCount(self, threshold, rows, cols):
+        # write code here
+        res = set()
+        visited = [[False for _ in range(cols)] for _ in range(rows)]
+        def calculate(x, y):
+            sumx = 0
+            sumy = 0
+            while x > 0:
+                sumx += (x % 10)
+                x //= 10
+            while y > 0:
+                sumx += (y % 10)
+                y //= 10
+            return sumx + sumy 
+
+        def dfs(curx, cury):
+            if calculate(curx, cury) > threshold:
+                return
+            res.add((curx, cury))
+            visited[curx][cury] = True
+
+            for x, y in [(curx-1, cury), (curx+1, cury), (curx, cury-1), (curx, cury+1)]:
+                if 0 <= x < rows and 0 <= y < cols and not visited[x][y]:
+                    dfs(x, y)
+        
+        dfs(0, 0)
+        
+        return len(res)
