@@ -1,0 +1,38 @@
+# -*- coding: utf-8 -*-
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param matrix char字符型二维数组 
+# @param word string字符串 
+# @return bool布尔型
+#
+class Solution:
+    def hasPath(self , matrix , word ):
+        # write code here
+        m = len(matrix)
+        n = len(matrix[0])
+        if m == 0 or n == 0:
+            return False
+        visited = [[0 for _ in range(n)] for _ in range(m)]
+        self.res = False
+        def dfs(curx, cury, cur):
+            if self.res == True:
+                return
+            if cur == len(word):
+                self.res = True
+            for x, y in [(curx-1,cury),(curx+1, cury),(curx, cury-1),(curx, cury+1)]:
+                if self.res == True:
+                    break
+                if 0 <= x < m and 0 <= y < n and not visited[x][y] and matrix[x][y] == word[cur]:
+                    visited[x][y] = 1
+                    dfs(x, y, cur+1)
+                    visited[x][y] = 0
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == word[0]:
+                    visited[i][j] = 1
+                    dfs(i, j, 1)
+                    visited[i][j] = 0
+                    if self.res == True:
+                        break
+        return self.res
