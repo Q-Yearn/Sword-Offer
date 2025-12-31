@@ -1,0 +1,33 @@
+# -*- coding:utf-8 -*-
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+# class Solution:
+#     def EntryNodeOfLoop(self, pHead):
+#         # write code here
+#         tmp = set()
+#         node = pHead
+#         while node:
+#             if node not in tmp:
+#                 tmp.add(node)
+#             else:
+#                 return node
+#             node = node.next
+
+class Solution:
+    def EntryNodeOfLoop(self, pHead):
+        slow = pHead
+        fast = pHead
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                break
+        if fast == None or fast.next == None:
+            return None
+        slow = pHead
+        while slow != fast:
+            slow = slow.next
+            fast = fast.next
+        return fast
