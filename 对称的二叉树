@@ -1,0 +1,48 @@
+#coding:utf-8
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param pRoot TreeNode类 
+# @return bool布尔型
+#
+# 方法一  递归
+# class Solution:
+#     def isSymmetrical(self , pRoot ):
+#         if not pRoot:
+#             return True
+#         # write code here
+#         def judge(left, right):
+#             if not left and not right:
+#                 return True
+#             if not left or not right:
+#                 return False
+#             return left.val == right.val and judge(left.left, right.right) and judge(left.right,right.left)
+#         return judge(pRoot.left, pRoot.right)
+
+# 方法二  层序遍历
+from collections import deque
+class Solution:
+    def isSymmetrical(self , pRoot ):
+        if not pRoot:
+            return True
+        queue1 = deque([pRoot.left])
+        queue2 = deque([pRoot.right])
+        while queue1 and queue2:
+            left = queue1.popleft()
+            right = queue2.popleft()
+            if not left and not right:
+                continue
+            if not left or not right or left.val != right.val:
+                return False
+            queue1.append(left.left)
+            queue1.append(left.right)
+            queue2.append(right.right)
+            queue2.append(right.left)
+        return True
+
