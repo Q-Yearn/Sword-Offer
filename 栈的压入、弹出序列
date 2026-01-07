@@ -1,0 +1,60 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param pushV int整型一维数组 
+# @param popV int整型一维数组 
+# @return bool布尔型
+#
+# 方法一  回溯  超时了  同时学习使用回溯法枚举所有栈的出栈序列
+# class Solution:
+#     def IsPopOrder(self , pushV , popV ):
+#         # write code here
+#         self.res = False
+#         def dfs(i, j, stack):
+#             if self.res:
+#                 return
+#             if j == len(popV):
+#                 self.res = True
+#                 return 
+#             if i < len(pushV):
+#                 dfs(i+1, j, stack+[pushV[i]])
+#             if stack and stack[-1] == popV[j]:
+#                 dfs(i, j+1, stack[:-1])
+#         dfs(0, 0, [])
+#         return self.res
+
+# 方法二
+# class Solution:
+#     def IsPopOrder(self , pushV , popV ):
+#         n = len(popV)
+#         tmp = []
+#         # 遍历出栈数组
+#         j = 0
+#         for i in range(n):
+#             while j < n and (not tmp or tmp[-1] != popV[i]):
+#                 tmp.append(pushV[j])
+#                 j += 1
+#             if tmp[-1] == popV[i]:
+#                 tmp.pop()
+#             else:
+#                 return False
+#         return True
+
+
+# 方法三
+class Solution:
+    def IsPopOrder(self , pushV , popV ):
+        # 入栈的空间大小
+        n = 0
+        # 出栈元素下表
+        j = 0
+        for num in pushV:
+            pushV[n] = num
+            while n >= 0 and pushV[n] == popV[j]:
+                j += 1
+                n -= 1
+            n += 1
+        return True if n == 0 else False
+
