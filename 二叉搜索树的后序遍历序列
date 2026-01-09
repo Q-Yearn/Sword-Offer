@@ -1,0 +1,41 @@
+# -*- coding:utf-8 -*-
+# 方法一  递归
+# class Solution:
+#     def VerifySquenceOfBST(self, sequence):
+#         # write code here
+#         if not sequence:
+#             return False
+#         slen = len(sequence)
+#         root = sequence[-1]
+#         index = 0
+#         for i in range(slen):
+#             if sequence[i] >= root:
+#                 index = i
+#                 break
+#         for i in range(index+1, slen):
+#             if sequence[i] < root:
+#                 return False
+
+#         left = True
+#         if index > 0:
+#             left = self.VerifySquenceOfBST(sequence[0:index])
+#         right = True
+#         if index < slen-1:
+#             right = self.VerifySquenceOfBST(sequence[index:slen-1]) 
+#         return left and right
+
+# 方法二  逆后序遍历
+class Solution:
+    def VerifySquenceOfBST(self, sequence):
+        if not sequence:
+            return False
+        root = float('inf')
+        stack = []
+        for i in range(len(sequence)-1, -1, -1):
+            if sequence[i] > root:
+                return False
+            else:
+                while stack and stack[-1] > sequence[i]:
+                    root = stack.pop()
+                stack.append(sequence[i])
+        return True
