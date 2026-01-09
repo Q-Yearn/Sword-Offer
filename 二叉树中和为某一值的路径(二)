@@ -1,0 +1,55 @@
+# coding:utf-8
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param root TreeNode类 
+# @param target int整型 
+# @return int整型二维数组
+#
+# 方法一  深搜 深度越界了
+# class Solution:
+#     def FindPath(self , root , target ):
+#         res = []
+
+#         def dfs(node, path, cur_sum):
+#             if not node:
+#                 return
+
+#             path.append(node.val)
+#             cur_sum += node.val
+
+#             if not node.left and not node.right:
+#                 if cur_sum == target:
+#                     res.append(path[:])
+#             else:
+#                 dfs(node.left, path, cur_sum)
+#                 dfs(node.right, path, cur_sum)
+
+#             path.pop()
+
+#         dfs(root, [], 0)
+#         return res
+
+# 方法二  广搜
+class Solution:
+    def FindPath(self , root , target ):
+        if not root:
+            return []
+        res = []
+        tmp = [(root, [root.val], root.val)]
+        while tmp:
+            node, path, sum = tmp.pop()
+            if not node.left and not node.right and sum == target:
+                res.append(path)
+            if node.right:
+                tmp.append((node.right, path+[node.right.val], sum+node.right.val))
+            if node.left:
+                tmp.append((node.left, path+[node.left.val], sum+node.left.val))
+                
+        return res
