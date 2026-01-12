@@ -1,0 +1,44 @@
+# -*- coding:utf-8 -*-
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+# class Solution:
+#     def Convert(self, pRootOfTree):
+#         # write code here
+#         if not pRootOfTree:
+#             return None
+#         tmp = []
+#         def dfs(root):
+#             if not root:
+#                 return
+#             dfs(root.left)
+#             tmp.append(root)
+#             dfs(root.right)
+#         dfs(pRootOfTree)
+#         for i in range(len(tmp)-1):
+#             tmp[i].right = tmp[i+1]
+#             tmp[i+1].left = tmp[i]
+#         return tmp[0]
+
+
+class Solution:
+    def Convert(self, pRootOfTree):
+        if not pRootOfTree:
+            return None
+        self.prenode = None
+        def dfs(root):
+            if not root:
+                return
+            dfs(root.left)
+            root.left = self.prenode
+            if self.prenode:
+                self.prenode.right = root
+            self.prenode = root
+            dfs(root.right)
+        dfs(pRootOfTree)
+        p = pRootOfTree
+        while p.left:
+            p = p.left
+        return p
