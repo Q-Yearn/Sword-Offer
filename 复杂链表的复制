@@ -1,0 +1,61 @@
+# -*- coding:utf-8 -*-
+class RandomListNode:
+    def __init__(self, x):
+        self.label = x
+        self.next = None
+        self.random = None
+
+# 判题有问题  为None时怎么都不对
+# class Solution:
+#     # 返回 RandomListNode
+#     def Clone(self, pHead):
+#         # write code here
+#         if pHead is None:
+#             return pHead
+#         mp = {}
+#         tmp = RandomListNode(0)
+#         pre = tmp
+#         cur = pHead
+#         while cur:
+#             clone = RandomListNode(cur.label)
+#             mp[cur] = clone
+#             pre.next = clone
+#             cur = cur.next
+#             pre = pre.next
+#         for key, value in mp.items():
+#             value.random = None if key.random == None else mp[key.random]
+#         return tmp.next
+
+
+class Solution:
+    # 返回 RandomListNode
+    def Clone(self, pHead):
+        if not pHead:
+            return pHead
+        cur = pHead
+        while cur:
+            clone = RandomListNode(cur.label)
+            clone.next = cur.next
+            cur.next = clone
+            cur = cur.next.next
+        cur = pHead
+        clone = pHead.next
+        res = clone
+        while cur:
+            if cur.random:
+                clone.random = cur.random.next
+            else:
+                clone.random = None
+            cur = cur.next.next
+            if clone.next:
+                clone = clone.next.next
+        
+        cur = pHead
+        clone = pHead.next
+        while cur:
+            cur.next = cur.next.next
+            if clone.next:
+                clone.next = clone.next.next
+            cur = cur.next
+            clone = clone.next
+        return res
