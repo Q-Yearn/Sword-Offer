@@ -1,0 +1,100 @@
+# -*- coding:utf-8 -*-
+# 方法一  先序遍历 递归
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+# import sys
+# #设置递归深度
+# sys.setrecursionlimit(100000)
+# class Solution:
+#     def __init__(self):
+#         self.index = 0
+#         self.s = ""
+    
+#     def SerializeHelper(self, root):
+#         if not root:
+#             self.s += "#"
+#             return
+#         self.s += (str)(root.val) + "!"
+#         self.SerializeHelper(root.left)
+#         self.SerializeHelper(root.right)
+
+#     def Serialize(self, root):
+#         # write code here
+#         self.s = ""
+#         self.SerializeHelper(root)
+#         return self.s
+
+#     def DeserializeHelper(self):
+#         if self.index >= len(self.s) or self.s[self.index] == "#":
+#             self.index += 1
+#             return
+#         val = 0
+#         while self.s[self.index] != "!" and self.index != len(self.s):
+#             val = val * 10 + (int)(self.s[self.index])
+#             self.index += 1
+#         root = TreeNode(val)
+#         if self.index == len(self.s):
+#             return root
+#         else:
+#             self.index += 1
+#         root.left = self.DeserializeHelper()
+#         root.right = self.DeserializeHelper()
+#         return root
+
+#     def Deserialize(self, s):
+#         # write code here
+#         if self.s == "#":
+#             return None
+#         return self.DeserializeHelper()
+
+
+# 方法二  层序遍历 队列
+from collections import deque
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+class Solution:
+    def __init__(self):
+        self.tmpnode = TreeNode(float('inf'))
+
+    def Serialize(self, root):
+        if not root:
+            return ""
+        s = []
+        queue = deque([root])
+        while queue:
+            node = queue.popleft()
+            s.append(str(node.val))
+            s.append('!')
+            if node is not self.tmpnode:
+                queue.append(node.left if node.left else self.tmpnode) 
+                queue.append(node.right if node.right else self.tmpnode) 
+        
+        return "".join(s)
+
+    def Deserialize(self, s):
+        if s == "":
+            return None
+        ss = s.split("!")
+        n = len(ss)
+        root = TreeNode(int(ss[0]))
+        queue = deque([root])
+        i = 1
+        while i < n-1:
+            node = queue.popleft()
+            left = float(ss[i])
+            right = float(ss[i+1])
+            if left != float('inf'):
+                node.left = TreeNode(left)
+                queue.append(node.left)
+            if right != float('inf'):
+                node.right = TreeNode(right)
+                queue.append(node.right)
+            i += 2
+        return root
