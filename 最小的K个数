@@ -1,0 +1,60 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param input int整型一维数组 
+# @param k int整型 
+# @return int整型一维数组
+#
+# leetcode热题 数组中的第k个最大元素
+# # 计数排序
+# class Solution:
+#     def GetLeastNumbers_Solution(self , input , k ):
+#         # write code here
+#         tmp = [0] * 1001
+#         for num in input:
+#             tmp[num] += 1
+#         res = []
+#         for i, cur in enumerate(tmp):
+#             if cur >= k:
+#                 for j in range(k):
+#                     res.append(i)
+#                 return res
+#             else:
+#                 for j in range(cur):
+#                     res.append(i)
+#             k -= cur
+
+# 堆排序
+# 可以直接使用库函数heapq
+class Solution:
+    def GetLeastNumbers_Solution(self , input , k ):
+        m = len(input)
+        # 直接建立最小堆也行
+        input = [-x for x in input]
+        self.buildminhead(input, m)
+        res = []
+        for i in range(m-1, m-k-1, -1):
+            res.append(-input[0])
+            input[0], input[i] = input[i], input[0]
+            m -= 1
+            self.maxheap(input, 0, m)
+        return res
+    
+    # 乘以-1大根堆转变为小根堆
+    def buildminhead(self, input, m):
+        for i in range(m//2-1, -1, -1):
+            self.maxheap(input, i, m)
+    
+    def maxheap(self, input, i, m):
+        left = i * 2 + 1
+        right = i * 2 + 2
+        largest = i
+        if left < m and input[left] > input[largest]:
+            largest = left
+        if right < m and input[right] > input[largest]:
+            largest = right
+        if largest != i:
+            input[i], input[largest] = input[largest], input[i]
+            self.maxheap(input, largest, m)
