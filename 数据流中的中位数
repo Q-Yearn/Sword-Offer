@@ -1,0 +1,24 @@
+# leetcode 热题数据流的中位数
+# -*- coding:utf-8 -*-
+import heapq
+class Solution:
+    def __init__(self):
+        self.quemin = []
+        self.quemax = []
+    def Insert(self, num):
+        # write code here
+        if not self.quemin or num <= -self.quemin[0]:
+            heapq.heappush(self.quemin, -num)
+            if len(self.quemin) == len(self.quemax) + 2:
+                heapq.heappush(self.quemax, -heapq.heappop(self.quemin))
+        else:
+            heapq.heappush(self.quemax, num)
+            if len(self.quemin) < len(self.quemax):
+                heapq.heappush(self.quemin, -heapq.heappop(self.quemax))
+    def GetMedian(self):
+        # write code here
+        if len(self.quemin) > len(self.quemax):
+            return -self.quemin[0]
+        else:
+            # 在python3中可以  在python2中 /2还是向下取整  /2.0才可以
+            return (-self.quemin[0] + self.quemax[0]) / 2
