@@ -1,0 +1,26 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param n int整型 
+# @return int整型
+#
+class Solution:
+    def findNthDigit(self , n ):
+        # write code here
+        digit = 1          # 当前数字的位数
+        start = 1          # 当前位数的起始数字
+        count = 9          # 当前位数的数字个数
+
+        # 1. 找到 n 属于哪一位数区间
+        while n > digit * count:
+            n -= digit * count
+            digit += 1
+            count *= 10
+            start *= 10
+
+        num = start + (n - 1) // digit
+        index = (n - 1) % digit
+
+        return int(str(num)[index])
