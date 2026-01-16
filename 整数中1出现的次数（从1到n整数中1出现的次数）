@@ -1,0 +1,22 @@
+# -*- coding:utf-8 -*-
+# class Solution:
+#     def NumberOf1Between1AndN_Solution(self, n):
+#         # write code here
+#         res = 0
+#         for i in range(1, n+1):
+#             cur = i
+#             while cur > 0:
+#                 if cur % 10 == 1:
+#                     res += 1
+#                 cur //= 10
+#         return res
+
+
+class Solution:
+    def NumberOf1Between1AndN_Solution(self, n):
+        res = 0
+        mulbase = 1
+        while mulbase <= n:
+            res += ((n // (mulbase * 10)) * mulbase + min(max(n % (mulbase * 10)- mulbase + 1, 0), mulbase))
+            mulbase *= 10
+        return res
