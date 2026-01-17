@@ -1,0 +1,39 @@
+# coding:utf-8
+import functools
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param numbers int整型一维数组 
+# @return string字符串
+#
+# 超时
+# class Solution:
+#     def PrintMinNumber(self , numbers ):
+#         # write code here
+#         if not numbers:
+#             return ""
+#         self.res = None
+#         visited = [False] * len(numbers)
+#         def dfs(length, cur):
+#             if length == len(numbers):
+#                 if self.res is None or cur < self.res:
+#                     self.res = cur
+#                     return
+#             for i in range(len(numbers)):
+#                 if not visited[i]:
+#                     visited[i] = True
+#                     dfs(length+1, cur+str(numbers[i]))
+#                     visited[i] = False
+#         dfs(0, "")
+#         return self.res
+
+# 排序 直接冒泡排序都行 贪心思想  每次都是局部最大
+class Solution:
+    def PrintMinNumber(self , numbers ):
+        if not numbers:
+            return ""
+        nums = list(map(str, numbers))
+        cmp = lambda a, b : 1 if a + b > b + a else -1
+        nums.sort(key = functools.cmp_to_key(cmp))
+        return "".join(nums)
