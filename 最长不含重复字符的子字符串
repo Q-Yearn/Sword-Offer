@@ -1,0 +1,39 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param s string字符串 
+# @return int整型
+#
+# class Solution:
+#     def lengthOfLongestSubstring(self , s ):
+#         # write code here
+#         maxlen = 0
+#         for i in range(len(s)):
+#             j = i + 1
+#             while j < len(s):
+#                 if s[j] in s[i:j]:
+#                     break
+#                 j += 1
+#             maxlen = max(maxlen, j-i)
+#         return maxlen
+
+
+class Solution:
+    def lengthOfLongestSubstring(self , s ):
+        mp = {}
+        left = 0
+        right = 0
+        res = 0
+        while right < len(s):
+            if s[right] in mp:
+                mp[s[right]] += 1
+            else:
+                mp[s[right]] = 1
+            while mp[s[right]] > 1:
+                mp[s[left]] -= 1
+                left += 1
+            res = max(res, right - left + 1)
+            right += 1
+        return res
