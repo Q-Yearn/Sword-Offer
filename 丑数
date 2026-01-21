@@ -7,6 +7,7 @@
 # @return int整型
 #
 # 任意一个大于 1 的整数，都可以唯一分解成若干个质数的乘积
+# 超时了
 # import math
 # class Solution:
 #     def GetUglyNumber_Solution(self , index ):
