@@ -1,0 +1,57 @@
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param nums int整型一维数组 
+# @return int整型
+#
+# 超时
+# class Solution:
+#     def InversePairs(self , nums):
+#         # write code here
+#         num = 0
+#         for i in range(len(nums)-1):
+#             for j in range(i+1,len(nums)):
+#                 if nums[i] > nums[j]:
+#                     num += 1
+#         return num % 1000000007
+
+
+class Solution:
+    def InversePairs(self , nums):
+        if not nums:
+            return 0
+        self.cnt = 0
+        self.merge_sort(nums, 0, len(nums)-1)
+        return self.cnt % 1000000007
+    
+    def merge_sort(self, data, left, right):
+        if left >= right:
+            return
+        
+        mid = (left + right) // 2
+        self.merge_sort(data, left, mid)
+        self.merge_sort(data, mid+1, right)
+        
+        self.merge(data, left, mid, right)
+    
+    def merge(self, data, left, mid, right):
+        tmp = []
+        i = left
+        j = mid+1
+        while i <= mid and j <= right:
+            if data[i] <= data[j]:
+                tmp.append(data[i])
+                i += 1
+            else:
+                self.cnt += mid - i + 1
+                tmp.append(data[j])
+                j += 1
+        while i <= mid:
+            tmp.append(data[i])
+            i += 1
+        while j <= right:
+            tmp.append(data[j])
+            j += 1
+        for k in range(len(tmp)):
+            data[left+k] = tmp[k]
