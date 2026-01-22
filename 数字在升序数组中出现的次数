@@ -1,0 +1,57 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param nums int整型一维数组 
+# @param k int整型 
+# @return int整型
+#
+# class Solution:
+#     def GetNumberOfK(self , nums , k ):
+#         # write code here
+#         if not nums:
+#             return 0
+#         left = 0
+#         right = len(nums) - 1 
+#         mid = 0
+#         res = 0
+#         while left <= right:
+#             mid = (left + right) // 2
+#             if nums[mid] == k:
+#                 break
+#             elif nums[mid] < k:
+#                 left = mid + 1
+#             else:
+#                 right = mid - 1
+#         left1 = mid
+#         while left1 >= 0:
+#             if nums[left1] == k:
+#                 res += 1
+#             else:
+#                 break
+#             left1 -= 1
+#         right1 = mid + 1
+#         while right1 < len(nums):
+#             if nums[right1] == k:
+#                 res += 1
+#             else:
+#                 break
+#             right1 += 1
+#         return res
+
+
+class Solution:
+    def GetNumberOfK(self , nums , k ):
+        def binsearch(data, k):
+            left = 0
+            right = len(data) - 1
+            while left <= right:
+                mid = (left + right) // 2
+                if data[mid] < k:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+            # 这里返回left和right 都可以
+            return left
+        return binsearch(nums, k+0.5) - binsearch(nums, k-0.5)
