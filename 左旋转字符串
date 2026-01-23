@@ -1,0 +1,53 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param str string字符串 
+# @param n int整型 
+# @return string字符串
+#
+# class Solution:
+#     def LeftRotateString(self , str , n ):
+#         # write code here
+#         m = len(str)
+#         res = ["" for _ in range(m)]
+#         for i in range(m):
+#             res[(i+abs(m-n%m))%m] = str[i]
+#         return ''.join(res)
+
+
+# class Solution:
+#     def LeftRotateString(self , str , n ):
+#         res = ""
+#         m = len(str)
+#         if m == 0:
+#             return res
+#         n %= m
+#         for i in range(n, m):
+#             res += str[i]
+#         for i in range(n):
+#             res += str[i]
+#         return res
+
+
+class Solution:
+    def LeftRotateString(self , str , n ):
+        if not str:
+            return ""
+        
+        def reverse(s, left, right):
+            while left < right:
+                s[left], s[right] = s[right], s[left]
+                left += 1
+                right -= 1
+        
+        m = len(str)
+        s = list(str)
+        n %= m
+        reverse(s, 0, m-1)
+        reverse(s, 0, m-n-1)
+        reverse(s, m-n, m-1)
+
+        return "".join(s)
+        
