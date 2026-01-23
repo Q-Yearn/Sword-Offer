@@ -1,0 +1,37 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param nums int整型一维数组 
+# @return int整型一维数组
+#
+# class Solution:
+#     def FindNumsAppearOnce(self , nums ):
+#         # write code here
+#         tmp = set()
+#         for num in nums:
+#             if num in tmp:
+#                 tmp.remove(num)
+#             else:
+#                 tmp.add(num)
+#         return list(tmp)
+
+
+
+class Solution:
+    def FindNumsAppearOnce(self , nums ):
+        res = [0, 0]
+        tmp = 0
+        for num in nums:
+            tmp ^= num
+        k = 1
+        while k & tmp == 0:
+            k <<= 1
+        for num in nums:
+            if k & num == 0:
+                res[0] ^= num
+            else:
+                res[1] ^= num
+        res.sort()
+        return res
