@@ -1,0 +1,31 @@
+# -*- coding:utf-8 -*-
+# class Solution:
+#     def FindNumbersWithSum(self, array, tsum):
+#         # write code here\
+#         res = []
+#         left = 0
+#         right = len(array) - 1
+#         while left < right:
+#             if array[left] + array[right] == tsum:
+#                 res.append(array[left])
+#                 res.append(array[right])
+#                 break
+#             elif array[left] + array[right] < tsum:
+#                 left += 1
+#             else:
+#                 right -= 1
+#         return res
+
+
+class Solution:
+    def FindNumbersWithSum(self, array, tsum):
+        tmp = set()
+        res = []
+        for num in array:
+            if tsum - num not in tmp:
+                tmp.add(num)
+            else:
+                res.append(tsum-num)
+                res.append(num)
+                break
+        return res
