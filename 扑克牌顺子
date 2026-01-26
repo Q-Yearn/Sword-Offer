@@ -1,0 +1,41 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param numbers int整型一维数组 
+# @return bool布尔型
+#
+# class Solution:
+#     def IsContinuous(self , numbers ):
+#         # write code here
+#         tmp = set()
+#         for num in numbers:
+#             if num > 0:
+#                 if num in tmp:
+#                     return False
+#                 else:
+#                     tmp.add(num)
+#         if max(tmp) - min(tmp) >= 5:
+#             return False
+#         else:
+#             return True
+
+
+class Solution:
+    def IsContinuous(self , numbers ):
+        numbers.sort()
+        zero = 0
+        gap = 0
+        for i in range(len(numbers)-1):
+            if numbers[i] == 0:
+                zero += 1
+            else:
+                if numbers[i+1] - numbers[i] == 0:
+                    return False
+                else:
+                    gap += (numbers[i+1] - numbers[i] - 1)
+        if gap > zero:
+            return False
+        else:
+            return True
