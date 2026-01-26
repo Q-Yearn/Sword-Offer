@@ -1,0 +1,51 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param num int整型一维数组 
+# @param size int整型 
+# @return int整型一维数组
+#
+# 双端队列
+# class Solution:
+#     def maxInWindows(self , num , size ):
+#         # write code here
+#         res = []
+#         if size <= len(num) and size != 0:
+#             from collections import deque
+#             queue = deque()
+#             for i in range(size):
+#                 while len(queue) != 0 and num[queue[-1]] < num[i]:
+#                     queue.pop()
+#                 queue.append(i)
+#             for i in range(size, len(num)):
+#                 res.append(num[queue[0]])
+#                 while len(queue) != 0 and queue[0] < i - size + 1:
+#                     queue.popleft()
+#                 while len(queue) != 0 and num[queue[-1]] < num[i]:
+#                     queue.pop()
+#                 queue.append(i)
+#             res.append(num[queue[0]])
+#         return res
+
+# 分组
+class Solution:
+    def maxInWindows(self , num , size ):
+        n = len(num)
+        if size > n or size == 0:
+            return []
+        prefix = [0] * n
+        suffix = [0] * n
+        for i in range(n):
+            if i % size == 0:
+                prefix[i] = num[i]
+            else:
+                prefix[i] = max(prefix[i-1], num[i])
+        for i in range(n-1, -1, -1):
+            if i == n-1 or (i+1) % size == 0:
+                suffix[i] = num[i]
+            else:
+                suffix[i] = max(suffix[i+1], num[i])
+        res = [max(suffix[i], prefix[i+size-1]) for i in range(n-size+1)]
+        return res
