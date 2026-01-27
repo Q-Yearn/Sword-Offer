@@ -29,23 +29,25 @@
 # f(i) = (f(i-1) + m) % n
 # 有i个人时最后的人  等价于有i-1个人时，从m开始最后的人
 # 有i-1个人时，从m开始最后的人   和  有i-1个人时，从0开始最后的人  就是平移了m的关系
-class Solution:
-    def LastRemaining_Solution(self , n , m ):
-        if n == 0 or m == 0:
-            return - 1
-        x = 0
-        for i in range(2, n+1):
-            x = (m + x) % i
-        return x
-
-# 递归深度不够
 # class Solution:
 #     def LastRemaining_Solution(self , n , m ):
-#         def helper(n, m):
-#             if n == 1:
-#                 return 0
-#             x = helper(n-1, m)
-#             return (x + m) % n
 #         if n == 0 or m == 0:
 #             return - 1
-#         return helper(n, m)
+#         x = 0
+#         for i in range(2, n+1):
+#             x = (m + x) % i
+#         return x
+
+# 递归深度不够
+import sys
+sys.setrecursionlimit(100000)
+class Solution:
+    def LastRemaining_Solution(self , n , m ):
+        def helper(n, m):
+            if n == 1:
+                return 0
+            x = helper(n-1, m)
+            return (x + m) % n
+        if n == 0 or m == 0:
+            return - 1
+        return helper(n, m)
