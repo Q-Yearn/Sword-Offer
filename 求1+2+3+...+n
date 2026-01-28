@@ -1,0 +1,25 @@
+# -*- coding:utf-8 -*-
+# 方法一  与运算结束递归
+# class Solution:
+#     def __init__(self):
+#         self.res = 0
+#     def Sum_Solution(self, n):
+#         # write code here
+#         n > 1 and self.Sum_Solution(n-1)
+#         self.res += n
+#         return self.res
+
+# class Solution:
+#     def Sum_Solution(self, n):
+#         return n and (n + self.Sum_Solution(n-1))          
+
+
+# 方法二 函数列表+bool索引
+class Solution:
+    def Sum_Solution(self, n):
+        def func(n):
+            return 0
+        def func1(n):
+            funcs = [func, func1]
+            return n + funcs[bool(n)](n-1)
+        return func1(n)
