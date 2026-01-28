@@ -1,0 +1,11 @@
+# -*- coding:utf-8 -*-
+class Solution:
+    def Add(self, num1, num2):
+        # write code here
+        add = num2
+        sum = num1
+        while add:
+            tmp = add ^ sum
+            add = (add & sum) << 1
+            sum = tmp & 0xFFFFFFFF
+        return sum if sum >> 31 == 0 else sum - 2**32
