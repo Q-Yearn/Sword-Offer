@@ -1,0 +1,52 @@
+#coding:utf-8
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param root TreeNode类 
+# @param p int整型 
+# @param q int整型 
+# @return int整型
+#
+# class Solution:
+#     def lowestCommonAncestor(self , root , p , q ):
+#         # write code here
+#         res1 = []
+#         res2 = []
+#         res = None
+#         def dfs(node, res, target):
+#             if not node:
+#                 return False
+#             res.append(node)
+#             if node.val == target:
+#                 return True
+#             if dfs(node.left, res, target):
+#                 return True
+#             if dfs(node.right, res, target):
+#                 return True
+#             res.pop()
+#             return False
+#         dfs(root, res1, p)
+#         dfs(root, res2, q)
+#         for a, b in zip(res1, res2):
+#             if a == b:
+#                 res = a
+#             else:
+#                 break
+#         return res.val
+
+class Solution:
+    def lowestCommonAncestor(self , root , p , q ):
+        if not root:
+            return -1
+        if p >= root.val and q <= root.val or p <= root.val and q >= root.val:
+            return root.val
+        elif p <= root.val and q <= root.val:
+            return self.lowestCommonAncestor(root.left, p, q)
+        else:
+            return self.lowestCommonAncestor(root.right, p, q)
