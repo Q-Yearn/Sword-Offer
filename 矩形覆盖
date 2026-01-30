@@ -1,0 +1,18 @@
+# -*- coding:utf-8 -*-
+# 关键在于公式的得出
+# f(n) = f(n-1) [最左边放一个竖着的2*1  剩下2*(n-1)] + f(n-2)
+# f(n-1) [最左边放一个竖着的2*1  剩下2*(n-1)] 
+# f(n-2) [最左边放两个横着的2*1  剩下2*(n-2)] 
+class Solution:
+    def rectCover(self, number):
+        # write code here
+        if number <= 3:
+            return number
+        a = 1
+        b = 2
+        res = 0
+        for i in range(3, number+1):
+            res = a + b
+            a = b
+            b = res
+        return res
