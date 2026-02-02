@@ -1,0 +1,38 @@
+# -*- coding:utf-8 -*-
+# 方法一
+# class Solution:
+#     def ReverseSentence(self, s):
+#         # write code here
+#         cur = ""
+#         res = []
+#         for i in range(len(s)-1, -1, -1):
+#             if s[i] != " ":
+#                 cur += s[i]
+#             else:
+#                 res.append(cur[::-1])
+#                 cur = ""
+#             if i == 0:
+#                 res.append(cur[::-1])
+#         return " ".join(res)
+
+
+# 方法二
+# class Solution:
+#     def ReverseSentence(self, s):
+#         s = s[::-1]
+#         s = s.split(" ")
+#         # join() 接受任何可迭代对象 不一定是list
+#         return " ".join(s[i][::-1] for i in range(len(s)))
+
+
+# 方法三
+class Solution:
+    def ReverseSentence(self, s):
+        # 返回一个列表
+        s = s.split(" ")
+        res = []
+        while len(s) > 0:
+            res.append(s.pop())
+        return " ".join(res)
+
+
