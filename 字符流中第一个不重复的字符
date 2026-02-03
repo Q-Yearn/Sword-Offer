@@ -1,0 +1,43 @@
+# -*- coding:utf-8 -*-
+# class Solution:
+#     # 返回对应char
+#     def __init__(self):
+#         self.mp = {}
+#         self.s = ""
+#     def FirstAppearingOnce(self):
+#         # write code here
+#         for c in self.s:
+#             if self.mp[c] == 1:
+#                 return c
+#         return "#"
+#     def Insert(self, char):
+#         # write code here
+#         self.s += char
+#         if char in self.mp:
+#             self.mp[char] += 1
+#         else:
+#             self.mp[char] = 1
+
+
+
+from collections import deque
+class Solution:
+    # 返回对应char
+    def __init__(self):
+        self.mp = {}
+        self.q = []
+    def FirstAppearingOnce(self):
+        # write code here
+        while len(self.q) != 0:
+            if self.mp[self.q[0]] == 1:
+                return self.q[0]
+            else:
+                self.q.pop(0)
+        return "#"
+    def Insert(self, char):
+        # write code here
+        if char in self.mp:
+            self.mp[char] += 1
+        else:
+            self.mp[char] = 1
+            self.q.append(char)
