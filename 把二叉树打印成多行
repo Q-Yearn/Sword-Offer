@@ -1,0 +1,46 @@
+#coding:utf-8
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param pRoot TreeNode类 
+# @return int整型二维数组
+#
+# from collections import deque
+# class Solution:
+#     def Print(self , pRoot ):
+#         # write code here
+#         if not pRoot:
+#             return []
+#         q  = deque([pRoot])
+#         res = []
+#         while q:
+#             size = len(q)
+#             res.append([])
+#             for i in range(size):     
+#                 node = q.popleft()
+#                 res[-1].append(node.val)
+#                 if node.left:
+#                     q.append(node.left)
+#                 if node.right:
+#                     q.append(node.right)
+#         return res
+
+
+class Solution:
+    def Print(self , pRoot ):
+        res = []
+        def dfs(root, res, depth):
+            if root:
+                if len(res) < depth:
+                    res.append([])
+                res[depth - 1].append(root.val)
+                dfs(root.left, res, depth+1)
+                dfs(root.right, res, depth+1)
+        dfs(pRoot, res, 1)
+        return res
