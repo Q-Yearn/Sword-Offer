@@ -1,0 +1,54 @@
+#coding:utf-8
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param pRoot TreeNode类 
+# @return bool布尔型
+#
+# class Solution:
+#     def IsBalanced_Solution(self , pRoot ):
+#         # write code here
+#         def dfs(pRoot):
+#             if not pRoot:
+#                 return 0
+#             l = dfs(pRoot.left)
+#             if l == -1: return -1
+#             r = dfs(pRoot.right)
+#             if r == -1: return -1
+#             if abs(l - r) > 1:
+#                 return -1
+#             return max(l, r)+1
+#         return dfs(pRoot) != -1
+
+
+class Solution:
+    def __init__(self):
+        self.mp = {}
+    def depth(self, root):
+        if not root:
+            return 0
+        if root in self.mp:
+            return self.mp[root]
+        l = self.depth(root.left)
+        r = self.depth(root.right)
+        self.mp[root] = max(l, r) + 1
+        return self.mp[root]
+    
+    def judge(self, root):
+        if not root:
+            return True
+        l = self.mp.get(root.left, 0)
+        r = self.mp.get(root.right, 0)
+        return abs(l - r) <= 1 and self.judge(root.left) and self.judge(root.right)
+
+    def IsBalanced_Solution(self , pRoot ):
+        self.depth(pRoot)
+        return self.judge(pRoot)
+
+        
