@@ -1,0 +1,64 @@
+#coding:utf-8
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param root TreeNode类 
+# @param sum int整型 
+# @return int整型
+#
+# 错误的代码
+# class Solution:
+#     def FindPath(self , root , sum ):
+#         # write code here
+#         # 如果后面有值为0的节点  会漏路径 
+#         # 同时如果是空树  返回1  但通常是0
+#         if sum == 0:
+#             return 1
+#         if not root:
+#             return 0
+#         # 会出现选择了 A C 跳过了B的路径
+#         return self.FindPath(root.left, sum-root.val) + self.FindPath(root.right, sum-root.val) + self.FindPath(root.left, sum) + self.FindPath(root.right, sum)
+
+# import sys
+
+# # 增加递归深度限制到 100,000 (根据需要设置)
+# sys.setrecursionlimit(100000)
+# class Solution:
+#     def FindPath(self , root , sum ):
+#         if not root:
+#             return 0
+#         return self.countcur(root, sum) + self.FindPath(root.left, sum) + self.FindPath(root.right, sum)
+    
+#     def countcur(self, root, sum):
+#         if not root:
+#             return 0
+#         count = 0
+#         if sum == root.val:
+#             count += 1
+#         count += self.countcur(root.left, sum-root.val)
+#         count += self.countcur(root.right, sum-root.val)
+        # return count
+import sys
+
+# 增加递归深度限制到 100,000 (根据需要设置)
+sys.setrecursionlimit(100000)
+class Solution:
+    def FindPath(self , root , sum ):
+        def dfs(root, cursum, sum, mp):
+            if not root:
+                return 0
+            cursum += root.val
+            res = mp.get(cursum-sum, 0)
+            mp[cursum] = mp.get(cursum, 0) + 1
+            res += dfs(root.left, cursum, sum, mp)
+            res += dfs(root.right, cursum, sum, mp)
+            mp[cursum] -= 1
+            return res
+        mp = {0:1}
+        return dfs(root, 0, sum, mp)
