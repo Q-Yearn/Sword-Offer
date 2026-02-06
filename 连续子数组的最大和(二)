@@ -1,0 +1,54 @@
+#coding:utf-8
+#
+# 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+#
+# 
+# @param array int整型一维数组 
+# @return int整型一维数组
+#
+# 超内存了
+# class Solution:
+#     def FindGreatestSumOfSubArray(self , array ):
+#         # write code here
+#         n = len(array) 
+#         dp = [0] * n
+#         path = [[] for _ in range(n)]
+#         dp[0] = array[0]
+#         path[0].append(array[0])
+#         for i in range(1, n):
+#             # 等于也要保留使结果最长
+#             if dp[i-1] + array[i] >= array[i]:
+#                 dp[i] = dp[i-1] + array[i]
+#                 path[i] = path[i-1][:]
+#                 path[i].append(array[i])
+#             else:
+#                 dp[i] = array[i]
+#                 path[i].append(array[i])
+#         index = max(range(n), key=lambda i: (dp[i], len(path[i])))
+#         return path[index]
+
+
+# 想节省空间  可以将dp数组换为两个变量
+class Solution:
+    def FindGreatestSumOfSubArray(self , array ):
+        n = len(array) 
+        dp = [0] * n
+        left = 0
+        right = 0
+        resl = 0
+        resr = 0
+        dp[0] = array[0]
+        maxsum = dp[0]
+        for i in range(1, n):
+            right += 1
+            dp[i] = max(dp[i-1]+array[i], array[i])
+            if dp[i-1] + array[i] < array[i]:
+                left = right
+            if dp[i] > maxsum or dp[i] == maxsum and (right - left + 1) > (resr - resl + 1):
+                maxsum = dp[i]
+                resl = left
+                resr = right
+        res = []
+        for i in range(resl, resr+1):
+            res.append(array[i])
+        return res
