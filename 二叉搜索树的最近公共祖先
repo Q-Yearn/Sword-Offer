@@ -13,6 +13,7 @@
 # @param q int整型 
 # @return int整型
 #
+# 使用返回值或者使用flag来及时停止递归
 # class Solution:
 #     def lowestCommonAncestor(self , root , p , q ):
 #         # write code here
